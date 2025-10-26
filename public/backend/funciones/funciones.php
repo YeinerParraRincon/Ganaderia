@@ -133,6 +133,13 @@ function actualizarUsuario($conexion,$id_usuario,$nombre,$tipo_documneto,$numero
 }
 
 
-function insertarAnimal($conexion,$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen){
-
+function insertarAnimal($conexion,$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen,$finca){
+$sql = "INSERT INTO animal(codigo,nombre,numero,fecha,id_sexo,raza,caracteristicas,imagen,finca)VALUES(?,?,?,?,?,?,?,?,?)";
+$stmt = mysqli_prepare($conexion,$sql);
+mysqli_stmt_bind_param($stmt,"isisissss",$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen,$finca);
+if(mysqli_stmt_execute($stmt)){
+    echo "<script>alert('Fue exitoso el registro del animal')</script>";
+}else{
+    echo "<script>alert('Error el insertar el animal')</script>";
+}
 }

@@ -1,3 +1,8 @@
+<?php 
+$finca = $_GET["finca"];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +12,8 @@
 </head>
 <body>
     <h1>Registro Animal</h1>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="../backend/modelo/registroAnimalModelo.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="finca" value="<?php echo htmlentities($finca) ?>">
         <input type="number" placeholder="Codigo o Arete" name="codigo" required>
         
         <input type="text" placeholder="Nombre de Animal" name="nombre" required>

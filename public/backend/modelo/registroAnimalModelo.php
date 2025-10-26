@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $raza_animal = $_POST["raza"];
     $color = $_POST["color"];
     $imagen = $_FILES["imagen"]["name"];
+    $finca = $_POST["finca"];
 
     $tipos_permitidos = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
     if (!in_array($_FILES["imagen"]["type"], $tipos_permitidos)) {
@@ -58,5 +59,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    insertarAnimal($conexion,$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen);
+    insertarAnimal($conexion,$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen,$finca);
 }

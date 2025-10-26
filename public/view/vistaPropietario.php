@@ -25,28 +25,55 @@ if ($_SESSION["rol"] != 2) {
 
 <body class="bg-green-50 flex flex-col items-center min-h-screen">
 
-    <div class="flex items-center justify-between bg-slate-800 text-white rounded-3xl shadow-lg p-6 w-full max-w-6xl mx-auto mt-8">
-    <div class="flex items-center space-x-5">
-        <img 
-            src="/ganaderia/public/backend/img-archivos/<?php echo $_SESSION['imagen'] ?>" 
-            alt="Foto de perfil"
-            class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md">
+    <div class="flex items-center justify-between bg-slate-800 text-white rounded-3xl shadow-lg p-6 w-full max-w-6xl mx-auto mt-8 relative">
+        <div class="flex items-center space-x-5">
+            <img
+                src="/ganaderia/public/backend/img-archivos/<?php echo $_SESSION['imagen'] ?>"
+                alt="Foto de perfil"
+                class="w-20 h-20 rounded-full object-cover border-2 border-white shadow-md">
 
-        <div>
-            <h2 class="text-2xl font-bold tracking-wide"><?php echo $_SESSION['nombre'] ?></h2>
-            <p class="text-sm text-gray-300 font-medium">Propietari</p>
+            <div>
+                <h2 class="text-2xl font-bold tracking-wide"><?php echo $_SESSION['nombre'] ?></h2>
+                <p class="text-sm text-gray-300 font-medium">Propietario</p>
+            </div>
+        </div>
+
+        <button id="menuButton"
+            class="p-3 rounded-full bg-slate-700 hover:bg-slate-600 transition-all duration-200 shadow-md focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke-width="2" stroke="currentColor" class="w-6 h-6 text-white">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+
+        <div id="dropdownMenu"
+            class="hidden absolute top-20 right-6 bg-white text-gray-800 rounded-xl shadow-lg w-48 border border-gray-200 z-50">
+            <ul class="flex flex-col text-left">
+                <li>
+                    <a href="../view/registroAnimal.php?finca=<?php echo urldecode($_SESSION["finca"])?>"
+                        class="block px-5 py-3 hover:bg-green-100 rounded-t-xl transition">
+                        🐄 Registro Animal
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../view/buscarAnimal.php?finca=<?php echo urldecode($_SESSION["finca"])?>"
+                        class="block px-5 py-3 hover:bg-red-100 rounded-b-xl transition">
+                        🔎 Buscar Animal
+                    </a>
+                </li>
+
+                <li>
+                    <a href="../backend/modelo/logout.php"
+                        class="block px-5 py-3 hover:bg-red-100 rounded-b-xl transition">
+                        🚪 Cerrar Sesión
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-
-    <button
-        class="p-3 rounded-full bg-slate-700 hover:bg-slate-600 transition-all duration-200 shadow-md">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-            stroke-width="2" stroke="currentColor" class="w-6 h-6 text-white">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-    </button>
-</div>
+    </div>
     <header class="text-center mt-6">
         <h1 class="text-4xl font-extrabold text-green-800">🐄 Ganadero</h1>
         <h2 class="text-xl text-green-700 mt-2">Bienvenido a la Finca <span class="font-semibold"><?php echo $_SESSION["finca"] ?></span></h2>
@@ -86,11 +113,21 @@ if ($_SESSION["rol"] != 2) {
             </span>
         </button>
     </div>
+    <script>
+        const menuButton = document.getElementById('menuButton');
+        const dropdownMenu = document.getElementById('dropdownMenu');
 
-    <div class="mt-8 flex space-x-6">
-        <a href="../view/registroAnimal.php" class="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-lg shadow-md transition">Registro Animal</a>
-        <a href="../backend/modelo/logout.php" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg shadow-md transition">Cerrar Sesión</a>
-    </div>
+        menuButton.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+
+        window.addEventListener('click', (e) => {
+            if (!menuButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>
