@@ -34,7 +34,7 @@ if ($_SESSION["rol"] != 2) {
 
         <div>
             <h2 class="text-2xl font-bold tracking-wide"><?php echo $_SESSION['nombre'] ?></h2>
-            <p class="text-sm text-gray-300 font-medium">Propietario</p>
+            <p class="text-sm text-gray-300 font-medium">Propietari</p>
         </div>
     </div>
 
