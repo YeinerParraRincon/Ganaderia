@@ -1,30 +1,30 @@
 <?php
+$finca = $_GET["finca"];
 
-function buscarAnimal($conexion, $finca, $codigo)
-{
-    $sql = "SELECT * FROM animal WHERE finca = '$finca' AND codigo = $codigo";
-    $stmt = mysqli_query($conexion, $sql);
+require_once("../backend/conexion/conexion.php");
+
+$sql = "SELECT * FROM animal WHERE finca = '$finca' ";
+$stmt = mysqli_query($conexion, $sql);
 ?>
-    <!DOCTYPE html>
-    <html lang="es">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Animal encontrado</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
+<!DOCTYPE html>
+<html lang="en">
 
-    <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-        <div class="max-w-4xl w-full">
-            <h1 class="text-3xl font-bold text-center text-green-800 mb-8">🐄 Resultado de la búsqueda</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-            <?php
-            if (mysqli_num_rows($stmt)) {
-                while ($row = mysqli_fetch_assoc($stmt)) {
-                    $imagenRuta = "/ganaderia/public/backend/img-archivos/" . $row["imagen"];
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <h1 class="text-3xl font-bold text-center text-green-800 mb-8">🐄 Gestion de Animales de la finca <?php echo $finca ?></h1>
+    <?php
+    if (mysqli_num_rows($stmt)) {
+        while ($row = mysqli_fetch_assoc($stmt)) {
+            $imagenRuta = "/ganaderia/public/backend/img-archivos/" . $row["imagen"];
 
-                    echo '
+            echo '
                 <div class="bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all mb-6">
                     <div class="flex flex-col md:flex-row">
                         <img src="' . $imagenRuta . '" alt="Imagen del animal" 
@@ -47,21 +47,22 @@ function buscarAnimal($conexion, $finca, $codigo)
                             </form>
                             <button" 
                          class="bg-gray-500 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-600 transition">
+                            <a href = "/ganaderia/public/view/editarAnimal.php?id_animal='.$row["id_animal"].'">Editar</a>
+                             </button>
+                             <button" 
+                         class="bg-gray-500 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-600 transition">
+                            <a href = "/ganaderia/public/view/vistaPropietario.php">Eliminar</a>
+                             </button>
+                            <button" 
+                         class="bg-gray-500 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-600 transition">
                             <a href = "/ganaderia/public/view/vistaPropietario.php">Volver</a>
                              </button>
                         </div>
                     </div>
                 </div>';
-                }
-            } else {
-                echo '<p class="text-center text-gray-700 bg-white p-6 rounded-lg shadow">No se encontró ningún animal con esos datos.</p>';
-            }
-            ?>
-        </div>
-    </body>
+        }
+    }
+    ?>
+</body>
 
-    </html>
-
-<?php
-}
-?>
+</html>

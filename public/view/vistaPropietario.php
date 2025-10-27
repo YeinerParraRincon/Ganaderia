@@ -64,6 +64,13 @@ if ($_SESSION["rol"] != 2) {
                     </a>
                 </li>
 
+                 <li>
+                    <a href="../view/gestionAnimales.php?finca=<?php echo urldecode($_SESSION["finca"])?>"
+                        class="block px-5 py-3 hover:bg-red-100 rounded-b-xl transition">
+                        🖊️ Gestionar Animales
+                    </a>
+                </li>
+
                 <li>
                     <a href="../backend/modelo/logout.php"
                         class="block px-5 py-3 hover:bg-red-100 rounded-b-xl transition">
