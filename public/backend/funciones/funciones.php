@@ -136,6 +136,22 @@ function actualizarUsuario($conexion, $id_usuario, $nombre, $tipo_documneto, $nu
 
 function insertarAnimal($conexion, $codigo, $nombre_animal, $numero_chip, $fecha_nacimiento, $genero, $raza_animal, $color, $imagen, $finca)
 {
+    $sql_check = "SELECT COUNT(*) FROM animal WHERE codigo = ?";
+    $stmt_check = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt_check, "i", $codigo);
+    mysqli_stmt_execute($stmt_check);
+    mysqli_stmt_bind_result($stmt_check, $existe);
+    mysqli_stmt_fetch($stmt_check);
+    mysqli_stmt_close($stmt_check);
+
+    if ($existe > 0) {
+        echo "<script>
+            alert('Ya existe un animal con ese código');
+            window.history.back();
+        </script>";
+        return;
+    }
+
     $sql = "INSERT INTO animal(codigo,nombre,numero,fecha,id_sexo,raza,caracteristicas,imagen,finca)VALUES(?,?,?,?,?,?,?,?,?)";
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "isisissss", $codigo, $nombre_animal, $numero_chip, $fecha_nacimiento, $genero, $raza_animal, $color, $imagen, $finca);

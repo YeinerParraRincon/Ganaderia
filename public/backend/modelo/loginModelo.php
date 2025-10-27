@@ -8,7 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if (empty($correo) && empty($passwornd)) {
-        echo "<script>alert('No se permite campos vacios')</script>";
+        echo "<script>alert('No se permite campos vacios');
+        window.location.href = '/ganaderia/public/view/login.php'
+        </script>";
         return;
     }
 
