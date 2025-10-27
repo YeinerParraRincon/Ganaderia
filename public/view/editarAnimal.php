@@ -44,7 +44,7 @@ $row = mysqli_fetch_assoc($stmt);
 
         <input type="text" name="color" value="<?php echo $row["caracteristicas"] ?>" required>
 
-        <input type="file" name="imagen" required>
+        <input type="file" name="imagen" value="<?php echo $row["imagen"] ?>" required>
 
         <button type="submit">Registrar Animal</button>
     </form>
