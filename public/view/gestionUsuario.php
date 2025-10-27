@@ -59,6 +59,7 @@ $stmt = mysqli_query($conexion, $sql);
                         echo "<td>" . $row["correo"] . "</td>";
                         echo "<td>" . $row["contrasena"] . "</td>";
                         echo "<td>"."<button><a href = /ganaderia/public/view/editarUsuarios.php?id_usuario=".$row["id_usuario"].">Editar</a></button>"."</td>";
+                        echo "<td>"."<button><a href = /ganaderia/public/view/eliminarUsuario.php?id_usuario=".$row["id_usuario"].">Eliminar</a></button>"."</td>";
                         echo "</tr>";
                     }
                 }

@@ -51,7 +51,7 @@ $stmt = mysqli_query($conexion, $sql);
                              </button>
                              <button" 
                          class="bg-gray-500 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-600 transition">
-                            <a href = "/ganaderia/public/view/vistaPropietario.php">Eliminar</a>
+                            <a href = "/ganaderia/public/view/eliminarAnimal.php?id_animal='.$row["id_animal"].'">Eliminar</a>
                              </button>
                             <button" 
                          class="bg-gray-500 text-white px-5 py-2 rounded-lg shadow hover:bg-gray-600 transition">

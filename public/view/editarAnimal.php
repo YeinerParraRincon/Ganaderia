@@ -17,7 +17,8 @@ $row = mysqli_fetch_assoc($stmt);
 </head>
 
 <body>
-    <form action="" method="" enctype="multipart/form-data">
+    <form action="../backend/modelo/editarAnimalModelo.php" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id_animal" value="<?php echo htmlentities($id_usuario)?>" >
         <input type="number" value="<?php echo $row["codigo"] ?>" name="codigo" required>
 
         <input type="text" value="<?php echo $row["nombre"] ?>" name="nombre" required>

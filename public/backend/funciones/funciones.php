@@ -2,11 +2,11 @@
 require_once("../conexion/conexion.php");
 require_once("../modelo/enviarCorreo.php");
 
-function insertarUsuario($conexion, $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra,$imagen)
+function insertarUsuario($conexion, $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra, $imagen)
 {
     $sql = "INSERT INTO usuario(nombre,id_tipo_documento,numero_documento,id_rol,fecha_nacimiento,fecha_registro,telefono,finca,correo,contrasena,imagen)values(?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = mysqli_prepare($conexion, $sql);
-    mysqli_stmt_bind_param($stmt, "siiississss", $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra,$imagen);
+    mysqli_stmt_bind_param($stmt, "siiississss", $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra, $imagen);
     mysqli_stmt_execute($stmt);
 }
 
@@ -29,7 +29,7 @@ function validarUsuario($conexion, $correo, $passwornd)
         $id = $usuario["id_usuario"];
         $imagen = $usuario["imagen"];
         $nombre = $usuario["nombre"];
-        
+
 
         $_SESSION["id_usuario"] = $id;
         $_SESSION["correo"] = $correo;
@@ -119,29 +119,45 @@ function actualizarContraseñas($conexion, $contraseñaPrincipal, $correo)
 }
 
 
-function actualizarUsuario($conexion,$id_usuario,$nombre,$tipo_documneto,$numero_documento,$rol,$fecha_nacimiento,$telefono,$nombre_finca,$correo,$contrasena){
+function actualizarUsuario($conexion, $id_usuario, $nombre, $tipo_documneto, $numero_documento, $rol, $fecha_nacimiento, $telefono, $nombre_finca, $correo, $contrasena)
+{
     $sql = "UPDATE usuario SET nombre = ?,id_tipo_documento = ?,numero_documento = ?,id_rol = ?,fecha_nacimiento = ?,telefono = ?,finca = ?,correo = ?,contrasena = ? WHERE id_usuario = ?";
-    $stmt = mysqli_prepare($conexion,$sql);
-    mysqli_stmt_bind_param($stmt,"siiisisssi",$nombre,$tipo_documneto,$numero_documento,$rol,$fecha_nacimiento,$telefono,$nombre_finca,$correo,$contrasena,$id_usuario);
-    if(mysqli_stmt_execute($stmt)){
+    $stmt = mysqli_prepare($conexion, $sql);
+    mysqli_stmt_bind_param($stmt, "siiisisssi", $nombre, $tipo_documneto, $numero_documento, $rol, $fecha_nacimiento, $telefono, $nombre_finca, $correo, $contrasena, $id_usuario);
+    if (mysqli_stmt_execute($stmt)) {
         echo "<script>alert('Fue exitoso la actualizacion de datos');
         window.location.href = '/ganaderia/public/view/gestionUsuario.php'
         </script>";
-    }else{
+    } else {
         echo "<script>alert('Error al actualizar el Usuario')</script>";
     }
 }
 
 
-function insertarAnimal($conexion,$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen,$finca){
-$sql = "INSERT INTO animal(codigo,nombre,numero,fecha,id_sexo,raza,caracteristicas,imagen,finca)VALUES(?,?,?,?,?,?,?,?,?)";
-$stmt = mysqli_prepare($conexion,$sql);
-mysqli_stmt_bind_param($stmt,"isisissss",$codigo,$nombre_animal,$numero_chip,$fecha_nacimiento,$genero,$raza_animal,$color,$imagen,$finca);
-if(mysqli_stmt_execute($stmt)){
-    echo "<script>alert('Fue exitoso el registro del animal');
+function insertarAnimal($conexion, $codigo, $nombre_animal, $numero_chip, $fecha_nacimiento, $genero, $raza_animal, $color, $imagen, $finca)
+{
+    $sql = "INSERT INTO animal(codigo,nombre,numero,fecha,id_sexo,raza,caracteristicas,imagen,finca)VALUES(?,?,?,?,?,?,?,?,?)";
+    $stmt = mysqli_prepare($conexion, $sql);
+    mysqli_stmt_bind_param($stmt, "isisissss", $codigo, $nombre_animal, $numero_chip, $fecha_nacimiento, $genero, $raza_animal, $color, $imagen, $finca);
+    if (mysqli_stmt_execute($stmt)) {
+        echo "<script>alert('Fue exitoso el registro del animal');
     window.location.href = '/ganaderia/public/view/vistaPropietario.php'
     </script>";
-}else{
-    echo "<script>alert('Error el insertar el animal')</script>";
+    } else {
+        echo "<script>alert('Error el insertar el animal')</script>";
+    }
 }
+
+function  editarUsuario($conexion, $codigo_animal, $nombre_animal, $numero_animal, $fecha_nacimiento, $sexo_animal, $raza_animal, $color_animal, $imagen_animal, $id_animal)
+{
+    $sql = "UPDATE animal SET codigo = ?,nombre = ?,numero = ?,fecha = ?,id_sexo = ?,raza = ?,caracteristicas = ?,imagen = ? WHERE id_animal =  ?";
+    $stmt = mysqli_prepare($conexion, $sql);
+    mysqli_stmt_bind_param($stmt, "isisisssi", $codigo_animal, $nombre_animal, $numero_animal, $fecha_nacimiento, $sexo_animal, $raza_animal, $color_animal, $imagen_animal, $id_animal);
+    if (mysqli_stmt_execute($stmt)) {
+        echo "<script>alert('Fue exitoso la edicion del animal');
+        window.location.href = '/ganaderia/public/view/vistaPropietario.php'
+        </script>";
+    } else {
+        echo "<script>alert('Error al editar el animal')</script>";
+    }
 }
