@@ -49,7 +49,9 @@ function validarUsuario($conexion, $correo, $passwornd)
             window.location.href = '/ganaderia/public/view/vistaPropietario.php'
             </script>";
         } else if ($rol == 4) {
-            echo "<script>alert('Bienvenido Veterinario')</script>";
+            echo "<script>alert('Bienvenido Veterinario');
+            window.location.href = '/ganaderia/public/view/vistaVeterinario.php'
+            </script>";
         } else {
             echo "<script>alert('Este Usuario No tiene rol Asignado')</script>";
         }
@@ -175,5 +177,41 @@ function  editarUsuario($conexion, $codigo_animal, $nombre_animal, $numero_anima
         </script>";
     } else {
         echo "<script>alert('Error al editar el animal')</script>";
+    }
+}
+
+function insertarInsepcionAnimal($conexion, $id_usuario, $id_animal, $estado, $descripcion, $finca)
+{
+    mysqli_begin_transaction($conexion);
+
+    try {
+
+        $sql = "INSERT INTO salud(id_animal, id_estado, descripcion) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conexion, $sql);
+        mysqli_stmt_bind_param($stmt, "iis", $id_animal, $estado, $descripcion);
+        mysqli_stmt_execute($stmt);
+        $id_salud = mysqli_insert_id($conexion);
+
+
+        $sql = "INSERT INTO salud_usuario(id_salud, id_usuario) VALUES (?, ?)";
+        $stmt = mysqli_prepare($conexion, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $id_salud, $id_usuario);
+        mysqli_stmt_execute($stmt);
+        $id_salud_usuario = mysqli_insert_id($conexion);
+
+
+        $sql = "INSERT INTO notificaciones(id_salud_usuario, id_notification_type, finca) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conexion, $sql);
+        mysqli_stmt_bind_param($stmt, "iis", $id_salud_usuario, 3, $finca);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_commit($conexion);
+        echo "<script>
+        alert('Fue exitosa la inspección del animal');
+        window.location.href = '/pagina/public/view/vistaVeterinario.php';
+    </script>";
+    } catch (Exception $e) {
+        mysqli_rollback($conexion);
+        die("Error en transacción: " . mysqli_error($conexion));
     }
 }

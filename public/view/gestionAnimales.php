@@ -19,7 +19,7 @@ $stmt = mysqli_query($conexion, $sql);
 <body class="min-h-screen w-full bg-gray-900 bg-cover bg-no-repeat flex flex-col items-center justify-start p-8"
     style="background-image:url('https://images.unsplash.com/photo-1499123785106-343e69e68db1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1748&q=80')">
 
-    <!-- Encabezado -->
+    
     <div class="text-center text-white mb-10 mt-6">
         <img src="../backend/img/descargar-removebg-preview.png" width="120" alt="Logo Ganadería" class="mx-auto mb-3">
         <h1 class="text-3xl font-bold">🐄 Gestión de Animales</h1>
