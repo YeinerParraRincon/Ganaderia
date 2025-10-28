@@ -64,6 +64,12 @@ if ($_SESSION["rol"] != 1) {
                             </a>
                         </li>
                         <li>
+                            <a href="/ganaderia/public/view/gestionarCambios.php"
+                                class="block px-5 py-3 hover:bg-yellow-600 transition">
+                                🖊️ Gestionar Cambios
+                            </a>
+                        </li>
+                        <li>
                             <a href="../backend/modelo/logout.php"
                                 class="block px-5 py-3 hover:bg-red-600 transition rounded-b-xl">
                                 🚪 Cerrar Sesión

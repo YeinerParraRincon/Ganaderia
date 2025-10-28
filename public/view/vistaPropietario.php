@@ -70,6 +70,12 @@ if ($_SESSION["rol"] != 2) {
                             </a>
                         </li>
                         <li>
+                            <a href="../view/gestionarCambiosUnico?finca=<?php echo urldecode($_SESSION["finca"]) ?>"
+                                class="block px-5 py-3 hover:bg-yellow-600 transition">
+                                🖊️ Gestionar Cambios
+                            </a>
+                        </li>
+                        <li>
                             <a href="../backend/modelo/logout.php"
                                 class="block px-5 py-3 hover:bg-red-600 transition rounded-b-xl">
                                 🚪 Cerrar Sesión
