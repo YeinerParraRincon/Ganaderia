@@ -52,19 +52,19 @@ if ($_SESSION["rol"] != 1) {
                     class="hidden absolute top-24 right-10 bg-gray-900 bg-opacity-80 text-white rounded-xl shadow-lg w-56 border border-yellow-500 z-50">
                     <ul class="flex flex-col text-left">
                         <li>
-                            <a href="/ganaderia/public/view/registro.php"
+                            <a href="/ganaderia/public/view/registro.php?rol=<?php echo $_SESSION["rol"]?>&id_usuario=<?php echo $_SESSION["id_usuario"]?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition rounded-t-xl">
                                 🧑 Registro Usuario
                             </a>
                         </li>
                         <li>
-                            <a href="/ganaderia/public/view/gestionUsuario.php"
+                            <a href="/ganaderia/public/view/gestionUsuario.php?rol=<?php echo $_SESSION["rol"]?>&id_usuario=<?php echo $_SESSION["id_usuario"] ?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition">
                                 🖊️ Gestionar Usuario
                             </a>
                         </li>
                         <li>
-                            <a href="/ganaderia/public/view/gestionarCambios.php"
+                            <a href="/ganaderia/public/view/gestionarCambios.php?id_usuario=<?php echo $_SESSION["id_usuario"]?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition">
                                 🖊️ Gestionar Cambios
                             </a>

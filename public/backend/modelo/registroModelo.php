@@ -47,9 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    $fecha_actual = date("Y-m-d");
-    if ($fecha_nacimiento > $fecha_actual) {
-        echo "<script>alert('La fecha de nacimiento no puede ser mayor a la fecha actual')</script>";
+    $fecha_actual = new DateTime();
+    $fecha_minima = $fecha_actual->modify("-18 years");
+    $fecha_nac = new DateTime($fecha_nacimiento);
+
+    if ($fecha_nac > $fecha_minima) {
+        echo "<script>alert('Solo pueden registrarse mayores de 18 años.');</script>";
         return;
     }
 
@@ -69,6 +72,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
+    $dominio = substr(strrchr($correo, "@"), 1);
+    if (!checkdnsrr($dominio, "MX")) {
+        echo "<script>
+        alert('El dominio del correo no existe o no puede recibir correos. Intente con otro.');
+        window.history.back();
+    </script>";
+        return;
+    }
+
     if ($correo != $confirmacion_correo) {
         echo "<script>alert('Los Correos Tienen que ser iguales')</script>";
         return;
@@ -79,5 +91,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    insertarUsuario($conexion, $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra,$imagen);
+    insertarUsuario($conexion, $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra, $imagen);
 }

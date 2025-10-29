@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["rol"]) || !isset($_SESSION["id_usuario"])) {
+    header("location:/pagina/view/login.php");
+    exit();
+}
+
+if ($_SESSION["rol"] != 1) {
+    header("location:/ganaderia/view/login.php");
+    exit();
+}
+
+if ($_SESSION["id_usuario"] != $_GET["id_usuario"]) {
+    header("location:/ganaderia/public/view/login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 

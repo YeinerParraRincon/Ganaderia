@@ -31,9 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return;
     }
 
-    $fecha_actual = date("Y-m-d");
-    if ($fecha_nacimiento > $fecha_actual) {
-        echo "<script>alert('La fecha de nacimiento no puede ser mayor a la fecha actual')</script>";
+    $fecha_actual = new DateTime();
+    $fecha_minima = $fecha_actual->modify("-18 years");
+    $fecha_nac = new DateTime($fecha_nacimiento);
+
+    if ($fecha_nac > $fecha_minima) {
+        echo "<script>alert('Solo pueden registrarse mayores de 18 años.');</script>";
         return;
     }
 
@@ -51,11 +54,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Formato de correo no valido porfavor validar ese campo')</script>";
         return;
     }
+    
+    $dominio = substr(strrchr($correo, "@"), 1);
+    if (!checkdnsrr($dominio, "MX")) {
+        echo "<script>
+        alert('El dominio del correo no existe o no puede recibir correos. Intente con otro.');
+        window.history.back();
+    </script>";
+        return;
+    }
+
 
     if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/", $contrasena)) {
         echo "<script>alert('La contraseña debe tener mínimo 8 caracteres, incluir mayúscula, minúscula y número, y no contener símbolos.')</script>";
         return;
     }
 
-    actualizarUsuario($conexion,$id_usuario,$nombre,$tipo_documneto,$numero_documento,$rol,$fecha_nacimiento,$telefono,$nombre_finca,$correo,$contrasena);
+    actualizarUsuario($conexion, $id_usuario, $nombre, $tipo_documneto, $numero_documento, $rol, $fecha_nacimiento, $telefono, $nombre_finca, $correo, $contrasena);
 }

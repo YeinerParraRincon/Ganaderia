@@ -98,12 +98,5 @@ $stmt = mysqli_query($conexion, $sql);
         ?>
     </div>
 
-    <div class="mt-10">
-        <a href="/ganaderia/public/view/vistaAdministrador.php"
-           class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg transition">
-           ⬅️ Volver al Panel Principal
-        </a>
-    </div>
-
 </body>
 </html>

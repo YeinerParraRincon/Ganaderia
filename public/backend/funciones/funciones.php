@@ -4,10 +4,68 @@ require_once("../modelo/enviarCorreo.php");
 
 function insertarUsuario($conexion, $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra, $imagen)
 {
+    $sql_check = "SELECT COUNT(*) FROM usuario WHERE correo = ?";
+    $stmt_check = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt_check, "s", $correo);
+    mysqli_stmt_execute($stmt_check);
+    mysqli_stmt_bind_result($stmt_check, $existe);
+    mysqli_stmt_fetch($stmt_check);
+    mysqli_stmt_close($stmt_check);
+
+    if ($existe > 0) {
+        echo "<script>
+            alert('Ya existe un usuario con ese correo');
+            window.history.back();
+        </script>";
+        return;
+    }
+
+    $sql_check = "SELECT COUNT(*) FROM usuario WHERE telefono = ?";
+    $stmt_check = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt_check, "i", $telefono);
+    mysqli_stmt_execute($stmt_check);
+    mysqli_stmt_bind_result($stmt_check, $existe);
+    mysqli_stmt_fetch($stmt_check);
+    mysqli_stmt_close($stmt_check);
+
+    if ($existe > 0) {
+        echo "<script>
+            alert('Ya existe un usuario con ese numero de telefono');
+            window.history.back();
+        </script>";
+        return;
+    }
+
+    $sql_check = "SELECT COUNT(*) FROM usuario WHERE numero_documento = ?";
+    $stmt_check = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt_check, "i", $documento);
+    mysqli_stmt_execute($stmt_check);
+    mysqli_stmt_bind_result($stmt_check, $existe);
+    mysqli_stmt_fetch($stmt_check);
+    mysqli_stmt_close($stmt_check);
+
+    if ($existe > 0) {
+        echo "<script>
+            alert('Ya existe un usuario con ese numero de documento');
+            window.history.back();
+        </script>";
+        return;
+    }
+
+
     $sql = "INSERT INTO usuario(nombre,id_tipo_documento,numero_documento,id_rol,fecha_nacimiento,fecha_registro,telefono,finca,correo,contrasena,imagen)values(?,?,?,?,?,?,?,?,?,?,?)";
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "siiississss", $nombre, $tipo_documento, $documento, $rol, $fecha_nacimiento, $fecha_registro, $telefono, $finca, $correo, $contra, $imagen);
-    mysqli_stmt_execute($stmt);
+    if (mysqli_stmt_execute($stmt)) {
+        echo "<script>alert('Fue exitoso');
+        window.location.href = '/ganaderia/public/view/vistaAdministrador.php'
+        </script>";
+    } else {
+        echo "<script>alert('Error al registrar el usuario');
+        window.history.back();
+        </script>";
+        return;
+    }
 }
 
 
@@ -56,7 +114,9 @@ function validarUsuario($conexion, $correo, $passwornd)
             echo "<script>alert('Este Usuario No tiene rol Asignado')</script>";
         }
     } else {
-        echo "<script>alert('No existe ese Usuario')</script>";
+        echo "<script>alert('No existe ese Usuario');
+        window.history.back();
+        </script>";
     }
 }
 
@@ -123,6 +183,46 @@ function actualizarContraseñas($conexion, $contraseñaPrincipal, $correo)
 
 function actualizarUsuario($conexion, $id_usuario, $nombre, $tipo_documneto, $numero_documento, $rol, $fecha_nacimiento, $telefono, $nombre_finca, $correo, $contrasena)
 {
+    $sql_check = "SELECT COUNT(*) FROM usuario WHERE telefono = ? ";
+    $stmt = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt, "i", $telefono);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $exito);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+    if ($exito > 0) {
+        echo "<script>alert('Ese numero de telefono ya existe');
+        window.history.back();
+        </script>";
+    }
+
+    $sql_check = "SELECT COUNT(*) FROM usuario WHERE correo = ? ";
+    $stmt = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt, "s", $correo);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $exito);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+    if ($exito > 0) {
+
+        echo "<script>alert('Ese correo ya existe');
+        window.history.back();
+        </script>";
+    }
+
+    $sql_check = "SELECT COUNT(*) FROM usuario WHERE documento = ? ";
+    $stmt = mysqli_prepare($conexion, $sql_check);
+    mysqli_stmt_bind_param($stmt, "i", $numero_documento);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $exito);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+    if ($exito > 0) {
+        echo "<script>alert('Ese numero de documento ya existe');
+        window.history.back();
+        </script>";
+    }
+
     $sql = "UPDATE usuario SET nombre = ?,id_tipo_documento = ?,numero_documento = ?,id_rol = ?,fecha_nacimiento = ?,telefono = ?,finca = ?,correo = ?,contrasena = ? WHERE id_usuario = ?";
     $stmt = mysqli_prepare($conexion, $sql);
     mysqli_stmt_bind_param($stmt, "siiisisssi", $nombre, $tipo_documneto, $numero_documento, $rol, $fecha_nacimiento, $telefono, $nombre_finca, $correo, $contrasena, $id_usuario);
@@ -185,25 +285,25 @@ function insertarInsepcionAnimal($conexion, $id_usuario, $id_animal, $estado, $d
     mysqli_begin_transaction($conexion);
 
     try {
-        
+
         $sql = "INSERT INTO salud(id_animal, id_estado, descripcion) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($conexion, $sql);
         mysqli_stmt_bind_param($stmt, "iis", $id_animal, $estado, $descripcion);
         mysqli_stmt_execute($stmt);
         $id_salud = mysqli_insert_id($conexion);
 
-        
+
         $sql = "INSERT INTO salud_usuario(id_salud, id_usuario) VALUES (?, ?)";
         $stmt = mysqli_prepare($conexion, $sql);
         mysqli_stmt_bind_param($stmt, "ii", $id_salud, $id_usuario);
         mysqli_stmt_execute($stmt);
         $id_salud_usuario = mysqli_insert_id($conexion);
 
-        
+
         $sql = "INSERT INTO notificaciones(id_salud_usuario, id_notification_type, finca) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($conexion, $sql);
-        $id_notification_type = 3; 
-        mysqli_stmt_bind_param($stmt, "iis", $id_salud_usuario, $id_notification_type , $finca);
+        $id_notification_type = 3;
+        mysqli_stmt_bind_param($stmt, "iis", $id_salud_usuario, $id_notification_type, $finca);
         mysqli_stmt_execute($stmt);
 
         mysqli_commit($conexion);
