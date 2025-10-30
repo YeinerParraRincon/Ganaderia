@@ -1,4 +1,20 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["rol"]) || !isset($_SESSION["id_usuario"])) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
+
+if ($_SESSION["rol"] != 2) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
+
+if ($_SESSION["id_usuario"] != $_GET["id_usuario"]) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
 $finca = $_GET["finca"];
 require_once("../backend/conexion/conexion.php");
 
@@ -90,20 +106,13 @@ $stmt = mysqli_query($conexion, $sql);
             echo '
             <div class="text-center text-gray-200 text-lg">
                 <p class="mb-4">🚫 No se encontraron inspecciones registradas para esta finca.</p>
-                <a href="/ganaderia/public/view/vistaAdministrador.php" 
+                <a href="/ganaderia/public/view/vistaPropietario.php" 
                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg transition">
                    ⬅️ Volver al Panel
                 </a>
             </div>';
         }
         ?>
-    </div>
-
-    <div class="mt-10">
-        <a href="/ganaderia/public/view/vistaPropietario.php"
-            class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg transition">
-            ⬅️ Volver al Panel Principal
-        </a>
     </div>
 
 </body>

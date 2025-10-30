@@ -1,4 +1,16 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["rol"]) || !isset($_SESSION["id_usuario"])) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
+
+if ($_SESSION["rol"] != 2) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
+
 require_once("../backend/conexion/conexion.php");
 $id_usuario = $_GET["id_animal"];
 
@@ -114,4 +126,5 @@ $row = mysqli_fetch_assoc($stmt);
     </div>
 
 </body>
+
 </html>

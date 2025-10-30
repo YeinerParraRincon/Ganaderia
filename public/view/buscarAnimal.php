@@ -1,4 +1,20 @@
-<?php 
+<?php
+session_start();
+
+if (!isset($_SESSION["rol"]) || !isset($_SESSION["id_usuario"])) {
+    header("location:/ganaderia/public/view/login.php");
+    exit();
+}
+
+if ($_SESSION["rol"] != 2) {
+    header("location:/ganaderia/public/view/login.php");
+    exit();
+}
+
+if ($_SESSION["id_usuario"] != $_GET["id_usuario"]) {
+    header("location:/ganaderia/public/view/login.php");
+    exit();
+}
 $finca = $_GET["finca"];
 ?>
 
@@ -48,4 +64,5 @@ $finca = $_GET["finca"];
     </div>
 
 </body>
+
 </html>

@@ -1,4 +1,15 @@
 <?php
+session_start();
+if (!isset($_SESSION["rol"]) || !isset($_SESSION["id_usuario"])) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
+
+if ($_SESSION["rol"] != 4) {
+    header("location: /ganaderia/public/view/login.php");
+    exit;
+}
+
 $finca = $_GET["finca"];
 $id_usuario = $_GET["id_usuario"];
 
@@ -56,7 +67,7 @@ $stmt = mysqli_query($conexion, $sql);
                             </button>
                         </form>
 
-                        <a href="/ganaderia/public/view/inspencionAnimal.php?id_animal=<?php echo $row['id_animal']; ?>&id_usuario=<?php echo htmlentities($id_usuario); ?>&finca=<?php echo $row["finca"]?>"
+                        <a href="/ganaderia/public/view/inspencionAnimal.php?id_animal=<?php echo $row['id_animal']; ?>&id_usuario=<?php echo htmlentities($id_usuario); ?>&finca=<?php echo $row["finca"] ?>"
                             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl font-semibold shadow-md transition">
                             ✏️ Inspeccionar
                         </a>
@@ -68,6 +79,12 @@ $stmt = mysqli_query($conexion, $sql);
         echo '</div>';
     }
     ?>
+    <div class="mt-10">
+        <a href="/ganaderia/public/view/vistaVeterinario.php"
+            class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg transition">
+            ⬅️ Volver al Panel
+        </a>
+    </div>
 
 </body>
 

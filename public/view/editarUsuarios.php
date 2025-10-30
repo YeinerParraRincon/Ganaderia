@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["rol"])) {
+if (!isset($_SESSION["rol"]) || !isset($_SESSION["id_usuario"])) {
     header("location: /ganaderia/public/view/login.php");
     exit();
 }
@@ -129,7 +129,7 @@ $row = mysqli_fetch_assoc($stmt);
 
             
             <div class="flex justify-between items-center mt-8">
-                <a href="/ganaderia/public/view/gestionUsuario.php"
+                <a href="/ganaderia/public/view/vistaAdministrador.php"
                     class="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-2xl font-semibold shadow-lg transition">
                     ⬅️ Volver
                 </a>

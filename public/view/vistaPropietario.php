@@ -52,25 +52,25 @@ if ($_SESSION["rol"] != 2) {
                     class="hidden absolute top-24 right-10 bg-gray-900 bg-opacity-80 text-white rounded-xl shadow-lg w-56 border border-yellow-500 z-50">
                     <ul class="flex flex-col text-left">
                         <li>
-                            <a href="../view/registroAnimal.php?finca=<?php echo urldecode($_SESSION["finca"]) ?>"
+                            <a href="../view/registroAnimal.php?finca=<?php echo urldecode($_SESSION["finca"])?>&id_usuario=<?php echo $_SESSION["id_usuario"] ?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition rounded-t-xl">
                                 🐄 Registro Animal
                             </a>
                         </li>
                         <li>
-                            <a href="../view/buscarAnimal.php?finca=<?php echo urldecode($_SESSION["finca"]) ?>"
+                            <a href="../view/buscarAnimal.php?finca=<?php echo urldecode($_SESSION["finca"])?>&id_usuario=<?php echo $_SESSION["id_usuario"] ?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition">
                                 🔍 Buscar Animal
                             </a>
                         </li>
                         <li>
-                            <a href="../view/gestionAnimales.php?finca=<?php echo urldecode($_SESSION["finca"]) ?>"
+                            <a href="../view/gestionAnimales.php?finca=<?php echo urldecode($_SESSION["finca"]) ?>&id_usuario=<?php echo $_SESSION["id_usuario"] ?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition">
                                 🖊️ Gestionar Animales
                             </a>
                         </li>
                         <li>
-                            <a href="../view/gestionarCambiosUnico?finca=<?php echo urldecode($_SESSION["finca"]) ?>"
+                            <a href="../view/gestionarCambiosUnico?finca=<?php echo urldecode($_SESSION["finca"]) ?>&id_usuario=<?php echo $_SESSION["id_usuario"] ?>"
                                 class="block px-5 py-3 hover:bg-yellow-600 transition">
                                 🖊️ Gestionar Cambios
                             </a>
