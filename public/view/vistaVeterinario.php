@@ -57,6 +57,12 @@ if ($_SESSION["rol"] != 4) {
                                 🐄 Gestionar Salud 
                             </a>
                         </li>
+                         <li>
+                            <a href="/ganaderia/public/view/registroAnimalVeterinario.php?finca=<?php echo $_SESSION["finca"]?>&id_usuario=<?php echo $_SESSION["id_usuario"]?>"
+                                class="block px-5 py-3 hover:bg-yellow-600 transition">
+                                🐄 Registrar Animal
+                            </a>
+                        </li>
                         <li>
                             <a href="../backend/modelo/logout.php"
                                 class="block px-5 py-3 hover:bg-red-600 transition rounded-b-xl">
