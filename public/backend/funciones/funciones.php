@@ -347,3 +347,20 @@ function insertarAnimalVeterinario($conexion, $codigo, $nombre_animal, $numero_c
         echo "<script>alert('Error el insertar el animal')</script>";
     }
 }
+
+
+function actualizarPerfil($conexion, $imagen, $nombre, $id_usuario)
+{
+    $sql = "UPDATE usuario SET nombre = ?,imagen = ? WHERE id_usuario = ? ";
+    $stmt = mysqli_prepare($conexion, $sql);
+    mysqli_stmt_bind_param($stmt, "ssi", $nombre, $imagen, $id_usuario);
+    if (mysqli_stmt_execute($stmt)) {
+        echo "<script>alert('Fue exitoso el cambio de perfil');
+        window.location.href = '/ganaderia/public/backend/modelo/logout.php'
+        </script>";
+    } else {
+        echo "<script>alert('Error al actualizar el perfil');
+        window.history.back();
+        </script>";
+    }
+}

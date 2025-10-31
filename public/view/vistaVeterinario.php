@@ -64,6 +64,12 @@ if ($_SESSION["rol"] != 4) {
                             </a>
                         </li>
                         <li>
+                            <a href="../view/vistaEditarPerfilVeterinario.php?id_usuario=<?php echo $_SESSION["id_usuario"]?>"
+                                class="block px-5 py-3 hover:bg-red-600 transition rounded-b-xl">
+                                🖊️ Editar Perfil
+                            </a>
+                        </li>
+                        <li>
                             <a href="../backend/modelo/logout.php"
                                 class="block px-5 py-3 hover:bg-red-600 transition rounded-b-xl">
                                 🚪 Cerrar Sesión
